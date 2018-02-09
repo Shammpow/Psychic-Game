@@ -24,7 +24,6 @@ document.onkeyup = function (event) {
     if (letter === letterToGuess) {
         wins++;
         document.querySelector("#wins").innerHTML = wins;
-        resetGame();
     }
     if (guessesLeft === 0) {
         losses++;
