@@ -7,34 +7,31 @@ var guessesLeft = 9;
 var wins = 0;
 var losses = 0;
 
-var updateGuessThisLetter = function () {
-    letterToGuess = letters[Math.floor(Math.random() * letters.length)];
-}
+var letterToGuess = letters[Math.floor(Math.random() * letters.length)];
+console.log(letterToGuess);
+
+
 
 document.onkeyup = function (event) {
     guessesLeft--;
-    guessedLetters.push(layout);
+    guessedLetters.push(event.key);
+    console.log(guessedLetters)
     updateGuessesLeft();
-    updateGuessesSoFar();
+    updateGuessesSoFar(guessedLetters);
 
+
+    var letter = event.key
     if (letter === letterToGuess) {
         wins++;
         document.querySelector("#wins").innerHTML = wins;
+        resetGame();
     }
     if (guessesLeft === 0) {
         losses++;
         document.querySelector("#losses").innerHTML = losses;
     }
-    var layout = 'undefined';
-    $('#guessesSoFar').on('keypress keyup', function (event) {
-        if (event.type == "keypress") {
-            // set layout
-            layout = 'en';
-        } else {
-            // use layout
-            console.log(layout);
-        }
-    });
+
+
 
 }
 
@@ -42,7 +39,10 @@ var updateGuessesLeft = function () {
     document.querySelector("#guesses-left").innerHTML = guessesLeft;
 }
 
-var updateGuessesSoFar = function () {
-    document.querySelector("#guesses-so-far").innerHTML = guessedLetters.join(",")
+var updateGuessesSoFar = function (guessedLetters) {
+    document.querySelector("#guessesSoFar").innerHTML = guessedLetters.join(" ,")
 }
 
+// Can't figure out how to get the game to reset after a win.
+// The idea is to reset the guesses counter as well as wipe the array, without refreshing the browser.
+// Ideally I want to still keep the wins and losses counters.
